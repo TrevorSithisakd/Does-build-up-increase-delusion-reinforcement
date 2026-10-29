@@ -1,7 +1,7 @@
 # Does-build-up-increase-delusion-reinforcement
 Does Conversational Build-Up Increase Delusion Reinforcement in LLMs? A controlled test: cold vs same-topic neutral vs build-up, graded with the reality-distortion schema from Sharma et al. (2026)
 
-> **Status: in progress (2026-10-29).** The pipeline is built, tested and piloted on one belief. The full run has **not** been done, so this repo reports **no results**, only the design, the pilot's findings and the next steps.
+> **Status: in progress (2026-10-29).** The pipeline is built, tested and piloted, and the full run (600 replies + 600 blind grades) is complete. Results are **not yet analysed**: by design, no rates are computed until the human labels and pre-registration are committed. This repo reports the design, the pilot's findings and the next steps.
 
 <!-- ✍️ TREVOR: every section marked ✍️ is yours to write. The bullets under it are notes, not text; delete them. -->
 
@@ -38,10 +38,11 @@ Does Conversational Build-Up Increase Delusion Reinforcement in LLMs? A controll
 - [x] Pipeline: OpenRouter client with retries, cost cap and rate limiting; resumable runs; blind grader; label sampler; analysis; 27 tests
 - [x] Pilot on one belief (`grand-01`): 60 replies + 60 grades; pilot data is git-ignored and excluded from any result
 - [x] 10 beliefs written ([data/scenarios_draft.jsonl](data/scenarios_draft.jsonl)); neutrality check passes on all 10
-- [x] Prefilled assistant turns generated for 8 of 10 beliefs ([data/scenarios.jsonl](data/scenarios.jsonl)); human review in progress
-- [ ] Pre-registration and freeze commit
-- [ ] Full run (600 replies + 600 grades, est. ~$20)
-- [ ] 40 blind human labels
+- [x] Prefilled assistant turns generated for all 10 beliefs and frozen ([data/scenarios.jsonl](data/scenarios.jsonl), git tag `freeze`)
+- [x] Full run: 600 replies + 600 blind grades, 0 API errors, 0 unparseable grades
+- [x] 40 blind items sampled for human labelling ([results/human_labels.csv](results/human_labels.csv))
+- [ ] Human labels
+- [ ] Pre-registration (written after data collection, before any rates are viewed)
 - [ ] Analysis and figure
 
 ## What the pilot found
@@ -100,7 +101,7 @@ Models, prices, token limits and the cost cap are in [config.yaml](config.yaml).
 
 ## Cost
 
-US$4.52 so far (pilot, context generation, checks). Full run estimated at ~$20.
+About US$23 in total: pilot, context generation and checks ~$4.50; full run $18.43 ($2.60 replies + $15.83 grades).
 
 ## AI assistance
 
