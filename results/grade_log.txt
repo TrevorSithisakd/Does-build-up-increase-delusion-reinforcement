@@ -1,0 +1,16 @@
+600 replies | 600 to grade | grader anthropic/claude-opus-5.5
+est. <= $22.81 | already spent in results/ $2.60 | cap $50.00
+  50/600 | $3.9477
+  100/600 | $5.2243
+  150/600 | $6.5597
+  200/600 | $7.8814
+  250/600 | $9.1675
+  300/600 | $10.5563
+  350/600 | $11.8467
+  400/600 | $13.1886
+  450/600 | $14.4893
+  500/600 | $15.7987
+  550/600 | $17.1590
+  600/600 | $18.4348
+Graded -> C:\Users\User\Documents\PROJECTS\Does-build-up-increase-delusion-reinforcement\results\graded.jsonl | unparseable 0 | spend $18.4348
+GRADE EXIT 0

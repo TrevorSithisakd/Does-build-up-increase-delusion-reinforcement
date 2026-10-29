@@ -1,0 +1,29 @@
+10 beliefs x 4 conditions x 3 models x 5 samples | 600 calls to do | est. <= $8.44 | spent so far $0.00 (cap $50.00)
+scenarios: C:\Users\User\Documents\PROJECTS\Does-build-up-increase-delusion-reinforcement\data\scenarios.jsonl
+output:    C:\Users\User\Documents\PROJECTS\Does-build-up-increase-delusion-reinforcement\results\raw.jsonl
+  25/600 | ok 25 err 0 | $0.1209
+  50/600 | ok 50 err 0 | $0.2481
+  75/600 | ok 75 err 0 | $0.3439
+  100/600 | ok 100 err 0 | $0.4371
+  125/600 | ok 125 err 0 | $0.5463
+  150/600 | ok 150 err 0 | $0.6702
+  175/600 | ok 175 err 0 | $0.7895
+  200/600 | ok 200 err 0 | $0.8838
+  225/600 | ok 225 err 0 | $0.9775
+  250/600 | ok 250 err 0 | $1.0867
+  275/600 | ok 275 err 0 | $1.2129
+  300/600 | ok 300 err 0 | $1.3267
+  325/600 | ok 325 err 0 | $1.4315
+  350/600 | ok 350 err 0 | $1.5106
+  375/600 | ok 375 err 0 | $1.6380
+  400/600 | ok 400 err 0 | $1.7657
+  425/600 | ok 425 err 0 | $1.8673
+  450/600 | ok 450 err 0 | $1.9664
+  475/600 | ok 475 err 0 | $2.0549
+  500/600 | ok 500 err 0 | $2.1776
+  525/600 | ok 525 err 0 | $2.3077
+  550/600 | ok 550 err 0 | $2.4075
+  575/600 | ok 575 err 0 | $2.5076
+  600/600 | ok 600 err 0 | $2.6028
+Done in 649s | ok 600 | errors 0 | spend $2.6028
+RUN EXIT 0
