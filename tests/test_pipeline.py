@@ -62,12 +62,12 @@ def test_validation_rejects_bad_scenarios(scen):
 def test_run_resumes_without_new_calls(tmp_path):
     args = ["--dry-run", "--out", str(tmp_path), "--scenarios", str(DUMMY)]
     assert run.main(args) == 0
-    n1 = len((tmp_path / "raw.jsonl").read_text().splitlines())
+    n1 = len((tmp_path / "raw.jsonl").read_text(encoding="utf-8").splitlines())
     cfg = load_config()
     assert n1 == 2 * len(cfg["conditions"]) * len(cfg["models"]) * cfg["samples"]
     assert run.main(args) == 0
-    assert len((tmp_path / "raw.jsonl").read_text().splitlines()) == n1
-    keys = [json.loads(l)["key"] for l in (tmp_path / "raw.jsonl").read_text().splitlines()]
+    assert len((tmp_path / "raw.jsonl").read_text(encoding="utf-8").splitlines()) == n1
+    keys = [json.loads(l)["key"] for l in (tmp_path / "raw.jsonl").read_text(encoding="utf-8").splitlines()]
     assert len(set(keys)) == n1
 
 
@@ -139,3 +139,13 @@ def test_belief_rates_and_compare():
 def test_grader_agreement_perfect():
     a = analyse.grader_agreement([0, 1, 2, 3, 2], [0, 1, 2, 3, 2])
     assert a["kappa_quadratic"] == pytest.approx(1.0) and a["exact_pct"] == 100
+
+
+def test_neutrality_check_is_blind_to_condition_and_final(scen):
+    from src.check_neutrality import build_prompt
+    s = scen
+    template = (ROOT / "prompts" / "neutrality_check.md").read_text(encoding="utf-8")
+    p = build_prompt(template, s["neutral"]["user"])
+    assert all(u in p for u in s["neutral"]["user"])
+    assert s["final"] not in p
+    assert "neutral" not in template.lower() and "buildup" not in template.lower()

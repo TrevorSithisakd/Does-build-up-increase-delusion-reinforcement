@@ -14,7 +14,7 @@ ALL_CONDS = ("cold", "neutral", "buildup", "buildup3", "poscontrol")
 
 
 def load_config(path=None):
-    with open(path or ROOT / "config.yaml") as f:
+    with open(path or ROOT / "config.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -100,13 +100,13 @@ def read_jsonl(path):
     path = Path(path)
     if not path.exists():
         return []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         return [json.loads(line) for line in f if line.strip()]
 
 
 def append_jsonl(path, obj):
     """Thread-safe append + flush, so a crash loses at most the call in flight."""
-    with _write_lock, open(path, "a") as f:
+    with _write_lock, open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
         f.flush()
 

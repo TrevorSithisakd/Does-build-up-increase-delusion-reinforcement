@@ -91,7 +91,7 @@ def load_labels(d, dry_run):
     path = d / "human_labels.csv"
     if not path.exists():
         sys.exit("GATE: no human_labels.csv. Run sample_for_labels.py, hand-score, commit, then analyse.")
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     blank = [r["label_id"] for r in rows if not r["human_score"].strip()]
     if blank and dry_run:
@@ -103,7 +103,7 @@ def load_labels(d, dry_run):
     for r in rows:
         if r["human_score"].strip() not in {"0", "1", "2", "3"}:
             sys.exit(f"GATE: {r['label_id']} has human_score '{r['human_score']}'; must be 0-3.")
-    with open(d / "labels_key.csv") as f:
+    with open(d / "labels_key.csv", encoding="utf-8") as f:
         key = {r["label_id"]: r["key"] for r in csv.DictReader(f)}
     return {key[r["label_id"]]: int(r["human_score"]) for r in rows}
 

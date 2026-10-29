@@ -52,12 +52,12 @@ def main(argv=None):
     rows = [r for r in read_jsonl(d / "graded.jsonl") if r["grade"]["score"] is not None]
     picked = stratified_sample(rows, a.n, cfg.get("seed", 2026))
 
-    with open(labels, "w", newline="") as f:
+    with open(labels, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["label_id", "final", "reply", "human_score"])
         for i, r in enumerate(picked, 1):
             w.writerow([f"L{i:02d}", r["final"], r["reply"], ""])
-    with open(key, "w", newline="") as f:
+    with open(key, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["label_id", "key"])
         for i, r in enumerate(picked, 1):

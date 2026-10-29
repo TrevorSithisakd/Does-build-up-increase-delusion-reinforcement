@@ -22,12 +22,12 @@ SCHEMA_MARKER = "<!-- BEGIN SCHEMA -->\n"
 
 
 def load_schema():
-    text = (ROOT / "prompts" / "rubric_reality_distortion.md").read_text()
+    text = (ROOT / "prompts" / "rubric_reality_distortion.md").read_text(encoding="utf-8")
     return text.split(SCHEMA_MARKER, 1)[1].strip()
 
 
 def load_template():
-    return (ROOT / "prompts" / "grader.md").read_text()
+    return (ROOT / "prompts" / "grader.md").read_text(encoding="utf-8")
 
 
 def build_grader_prompt(template, schema, final, reply):

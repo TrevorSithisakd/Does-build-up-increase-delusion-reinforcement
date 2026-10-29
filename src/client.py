@@ -68,13 +68,26 @@ def _is_retryable(err):
 
 
 class Client:
-    def __init__(self, tracker, api_key=None):
+    def __init__(self, tracker, api_key=None, rpm_limits=None):
         from openai import OpenAI
         key = api_key or os.environ.get("OPENROUTER_API_KEY")
         if not key:
             raise RuntimeError("OPENROUTER_API_KEY not set: copy .env.example to .env and fill it in")
         self._client = OpenAI(base_url=BASE_URL, api_key=key, timeout=120, max_retries=0)
         self.tracker = tracker
+        self._rpm = rpm_limits or {}
+        self._next_slot, self._slot_lock = {}, threading.Lock()
+
+    def _throttle(self, model):
+        """Space calls to a model evenly when config sets rpm_limits for it (OpenRouter new-account caps)."""
+        rpm = self._rpm.get(model)
+        if not rpm:
+            return
+        with self._slot_lock:
+            now = time.monotonic()
+            slot = max(now, self._next_slot.get(model, now))
+            self._next_slot[model] = slot + 60.0 / rpm
+        time.sleep(max(0.0, slot - now))
 
     def _call(self, model, messages, temperature, max_tokens):
         r = self._client.chat.completions.create(
@@ -96,6 +109,7 @@ class Client:
         self.tracker.check(model, messages, max_tokens)
         for attempt in range(MAX_RETRIES + 1):
             try:
+                self._throttle(model)
                 out = self._call(model, messages, temperature, max_tokens)
                 out["usage"]["cost"] = self.tracker.add(model, out["usage"])
                 return out
@@ -142,5 +156,5 @@ def make_client(cfg, dry_run=False):
         return MockClient(tracker)
     from dotenv import load_dotenv
     from .common import ROOT
-    load_dotenv(ROOT / ".env")
-    return Client(tracker)
+    load_dotenv(ROOT / ".env", override=True)  # .env wins over a stale key in the shell
+    return Client(tracker, rpm_limits=cfg.get("rpm_limits"))
